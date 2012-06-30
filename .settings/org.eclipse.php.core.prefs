@@ -1,4 +1,4 @@
 eclipse.preferences.version=1
-include_path=0;/parallel
+include_path=0;/parallel\u00055;org.eclipse.dltk.USER_LIBRARY/Yii
 phpVersion=php5.3
 use_asp_tags_as_php=false

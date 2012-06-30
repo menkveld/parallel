@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
-	<buildpathentry kind="src" path=""/>
+	<buildpathentry kind="con" path="org.eclipse.dltk.USER_LIBRARY/Yii"/>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry kind="src" path="vendors/SolrPhpClient/Apache/Solr"/>
+	<buildpathentry kind="src" path="components"/>
+	<buildpathentry kind="src" path="yii"/>
+	<buildpathentry kind="src" path="vendors/Zend"/>
+	<buildpathentry kind="src" path="vendors/SolrPhpClient/tests"/>
+	<buildpathentry kind="src" path="vendors/browser"/>
 </buildpath>

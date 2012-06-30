@@ -1,5 +1,5 @@
 <?php
-namespace parallel\yii\config;
+namespace parallel\yii\components\config;
 /**
  * 
  * Application component to manage global system configuration.

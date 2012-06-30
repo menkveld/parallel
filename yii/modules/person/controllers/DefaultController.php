@@ -1,6 +1,6 @@
 <?php
 
-class DefaultController extends PpController
+class DefaultController extends Controller
 {	
 	// Overide the model property of the Controller base class
 	// Once this is done, the generic loadModel method can be used.
