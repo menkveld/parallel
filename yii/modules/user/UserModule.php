@@ -1,7 +1,8 @@
 <?php
+namespace parallel\yii\modules\user;
 
-class UserModule extends CWebModule
-{
+class UserModule extends \CWebModule
+{	
 	public function init()
 	{
 		// this method is called when the module is being created
@@ -9,9 +10,12 @@ class UserModule extends CWebModule
 
 		// import the module-level models and components
 		$this->setImport(array(
-			'user.models.*',
-			'user.components.*',
+			//'user.models.*',
+			//'user.components.*',
 		));
+		
+		// Set the default controller
+		$this->controllerMap = array('default' => 'parallel\yii\modules\user\controllers\DefaultController');
 	}
 
 	public function beforeControllerAction($controller, $action)

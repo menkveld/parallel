@@ -1,4 +1,5 @@
 <?php
+namespace parallel\yii\modules\person\models;
 
 /**
  * This is the model class for table "person".
@@ -245,5 +246,4 @@ class Person extends \parallel\yii\EntityActiveRecord
 	public function getSearchDescription() {
 		return $this->preferred_name;
 	}
-	
 }

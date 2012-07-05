@@ -1,4 +1,5 @@
 <?php
+namespace parallel\yii\modules\user\models;
 
 /**
  * This is the model class for table "user".
@@ -6,26 +7,25 @@
  * The followings are the available columns in table 'user':
  * @property string $id
  * @property string $person_id
- * @property string $username
+ * @property string $username_contact_detail_id
  * @property string $password
  *
  * The followings are the available model relations:
- * @property CompanyUserRole[] $companyUserRoles
- * @property PersonUserRole[] $personUserRoles
  * @property Person $person
- * @property UserBranch[] $userBranches
+ * @property ContactDetail $usernameContactDetail
  */
 class User extends \parallel\yii\EntityActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
+	 * @param string $className active record class name.
 	 * @return User the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-
+	
 	/**
 	 * @return string the associated database table name
 	 */
@@ -42,12 +42,12 @@ class User extends \parallel\yii\EntityActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username', 'required'),
-			array('person_id', 'length', 'max'=>10),
-			array('username, password', 'length', 'max'=>50),
+			array('person_id, username_contact_detail_id, password', 'required'),
+			array('person_id, username_contact_detail_id', 'length', 'max'=>10),
+			array('password', 'length', 'max'=>50),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, person_id, username, password', 'safe', 'on'=>'search'),
+			array('id, person_id, username_contact_detail_id, password', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,10 +59,8 @@ class User extends \parallel\yii\EntityActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			//'companyUserRoles' => array(self::HAS_MANY, 'CompanyUserRole', 'user_id'),
-			//'personUserRoles' => array(self::HAS_MANY, 'PersonUserRole', 'user_id'),
-			'person' => array(self::BELONGS_TO, 'Person', 'person_id'),
-			'branches' => array(self::MANY_MANY, 'Branch', 'user_branch(user_id, branch_id)'),
+			'person' => array(self::BELONGS_TO, '\parallel\yii\modules\person\models\Person', 'person_id'),
+			'usernameContactDetail' => array(self::BELONGS_TO, '\parallel\yii\models\ContactDetails\ContactDetail', 'username_contact_detail_id'),
 		);
 	}
 
@@ -74,7 +72,7 @@ class User extends \parallel\yii\EntityActiveRecord
 		return array(
 			'id' => 'ID',
 			'person_id' => 'Person',
-			'username' => 'Username',
+			'username_contact_detail_id' => 'Email',
 			'password' => 'Password',
 		);
 	}
@@ -92,11 +90,34 @@ class User extends \parallel\yii\EntityActiveRecord
 
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('person_id',$this->person_id,true);
-		$criteria->compare('username',$this->username,true);
+		$criteria->compare('username_contact_detail_id',$this->username_contact_detail_id,true);
 		$criteria->compare('password',$this->password,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+
+	/**
+	 * Method used to encrypt password. Currntly simply MD5 but could be more complicated in future.
+	 * 
+	 * @param unknown_type $password
+	 */
+	public function encryptPassword($password) {
+		return MD5($password);
+	}
+	
+	/**
+	 * Returns a name for the person to be displayed on search results.
+	 */
+	public function getSearchName() {
+		return $this->username;
+	}
+	
+	/**
+	 * Returns a brief description to be displayed on search results.
+	 */
+	public function getSearchDescription() {
+		return $this->username;
+	}	
 }
