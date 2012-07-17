@@ -1,15 +1,24 @@
 <?php
-$this->breadcrumbs=array(
-	$this->module->id,
-);
+	Yii::app()->clientScript->registerScriptFile(\Yii::app()->assetManager->publish(\Yii::getPathOfAlias('vendors').'/knockout').'/knockout.js');
+	Yii::app()->clientScript->registerScriptFile(\Yii::app()->assetManager->publish(\Yii::getPathOfAlias('vendors').'/spin.js').'/spin.min.js');
+	Yii::app()->clientScript->registerScriptFile(\Yii::app()->assetManager->publish(\Yii::getPathOfAlias('vendors').'/spin.js').'/jquery.spin.js');
+	Yii::app()->clientScript->registerScriptFile($this->module->getAssetsUrl(true).'/js/user.js', CClientScript::POS_END);	// user ViewModel
+	
+	$this->breadcrumbs=array(
+		$this->module->id,
+	);
 ?>
-<h1><?php echo $this->uniqueId . '/' . $this->action->id; ?></h1>
+<script>
+	var restUrl = '<?php echo \CHtml::normalizeUrl(array('/rest/user/'.$model->id));?>';
+</script>
 
-<p>
-This is the view content for action "<?php echo $this->action->id; ?>".
-The action belongs to the controller "<?php echo get_class($this); ?>"
-in the "<?php echo $this->module->id; ?>" module.
-</p>
-<p>
-You may customize this page by editing <tt><?php echo __FILE__; ?></tt>
-</p>
+<div class="row-fluid">
+	<div id="sidebar" class="span2">
+		<?php $this->renderPartial('_sidebar');?>
+	</div><!-- sidebar -->
+	<div id="content" class="span10">
+		<div id="spinner" class="span2" style="height: 100px;"></div>
+		<?php $this->renderPartial('_profile');?>
+		<?php $this->renderPartial('_settings');?>
+	</div><!-- content -->
+</div><!-- row-fluid -->

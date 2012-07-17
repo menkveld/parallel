@@ -15,7 +15,7 @@ class Controller extends \CController {
 	 * @var string the default layout for the controller view. Defaults to '//layouts/column2',
 	 * meaning using a content and sidebar layout. See column2.php under current theme
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/column1';
 	
 	/**
 	 * @var array context menu items. This property will be assigned to {@link CMenu::items}.
@@ -57,21 +57,39 @@ class Controller extends \CController {
 	}
 
 	/**
+	 * Setter function for the _model
+	 * @param unknown_type $model
+	 */
+	public function setModel($model) {
+		$this->_model = $model;
+	}
+	
+	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer the ID of the model to be loaded
 	 */
-	public function loadModel($id) {
+	public function loadModel($id = 0) {
 		if(empty($this->_model)) {
-			throw new \CException('Child class must override the _model property.');
-		} else {
-			$model=\parallel\yii\ActiveRecord::model($this->_model)->findByPk($id);
-			if($model===null)
-				throw new \CHttpException(404,'The requested page does not exist.');
-			return $model;
+			// Throw exception for programming issue
+			throw new \CException('Child class must set model property before calling loadModel.');
+		} else {			
+			// If ID was specified get the specific record
+			if($id > 0) {
+				$model = \parallel\yii\ActiveRecord::model($this->_model)->findByPk($id);
+			} else {
+				$model = new $this->_model;
+			}
+
+			// Check that model exists
+			if($model!==null && $model instanceof \parallel\yii\ActiveRecord) {
+				return $model;
+			} else {
+				throw new \CException('Model could not be created.');
+			}
 		}
 	}
-	
+		
 	/**
 	 * To be able to use the generic loadModel method, child classes should 
 	 * ovveride this property. 

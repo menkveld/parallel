@@ -1,5 +1,6 @@
 <?php
 namespace parallel\yii;
+
 /**
  * Parallel system wide base class for CActiveRecord.
  * 
@@ -76,6 +77,22 @@ class ActiveRecord extends \CActiveRecord {
 		return $output;
 	}
 		
+	/**
+	 * This method will recursively go through the model and return it in array format.
+	 * 
+	 */
+	public function getArrayContents() {
+		$output = $this->attributes;
+		
+		foreach($this->relations() as $relation_name => $relation_details) {
+			$relation = $this->{$relation_name};
+			if($relation instanceof ActiveRecord) {
+				$output[$relation_name] = $relation->arrayContents;
+			}
+		}
+		return $output;
+	}
+	
 	/**
 	 * Override the getDbConnection method in order to return the
 	 * db instance as indicated by the global useSystemDatabase 

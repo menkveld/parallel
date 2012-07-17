@@ -60,10 +60,10 @@ class Person extends \parallel\yii\EntityActiveRecord
 			),
 			
 			// Automatically index this entity on any update action	
-			'autoIndex' => array(
-					'class' => 'parallel\yii\behaviors\AutoIndex',
-					'excludeRelations' => array('parallel\yii\models\ContactDetails\ContactDetail' => 'type'),
-			),
+			//'autoIndex' => array(
+			//		'class' => 'parallel\yii\behaviors\AutoIndex',
+			//		'excludeRelations' => array('parallel\yii\models\ContactDetails\ContactDetail' => 'type'),
+			//),
 
 			// Fuzzy Matching
 			'match' => array(
@@ -77,9 +77,9 @@ class Person extends \parallel\yii\EntityActiveRecord
 			),	
 			
 			// Audit Trail
-			'LoggableBehavior'=> array(
-					'class' => 'parallel.yii.modules.auditTrail.behaviors.LoggableBehavior',
-			),	
+			//'LoggableBehavior'=> array(
+			//		'class' => 'parallel.yii.modules.auditTrail.behaviors.LoggableBehavior',
+			//),	
 		);
 	}
 	
@@ -127,8 +127,8 @@ class Person extends \parallel\yii\EntityActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'contactDetails' => array(self::HAS_MANY, 'PersonContactDetail', 'person_id', 'on' => 'date_superseded=\'1970-01-01 00:00:00\'', 'order' => 'contact_detail_id'),	
-			'addresses' => array(self::HAS_MANY, 'PersonAddress', 'person_id', 'on' => 'date_superseded=\'1970-01-01 00:00:00\''),
+			'contactDetails' => array(self::HAS_MANY, '\parallel\yii\modules\person\models\PersonContactDetail', 'person_id', 'on' => 'date_superseded=\'1970-01-01 00:00:00\'', 'order' => 'contact_detail_id'),	
+			'addresses' => array(self::HAS_MANY, '\parallel\yii\modules\person\models\PersonAddress', 'person_id', 'on' => 'date_superseded=\'1970-01-01 00:00:00\''),
 			//'personEmployments' => array(self::HAS_MANY, 'PersonEmployment', 'person_id'),
 			//'personQualifications' => array(self::HAS_MANY, 'PersonQualification', 'person_id'),
 			//'personUserRoles' => array(self::HAS_MANY, 'PersonUserRole', 'person_id'),
@@ -145,7 +145,7 @@ class Person extends \parallel\yii\EntityActiveRecord
 			'id' => 'ID',
 			'full_name' => 'Full Names',
 			'surname' => 'Surname',
-			'preferred_name' => 'Preferred Name',
+			'preferred_name' => 'Name',
 			'date_of_birth' => 'Date Of Birth',
 			'gender' => 'Gender',
 		);

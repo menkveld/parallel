@@ -1,4 +1,5 @@
 <?php
+namespace parallel\yii\modules\person\models;
 
 /**
  * This is the model class for table "person_contact_detail".

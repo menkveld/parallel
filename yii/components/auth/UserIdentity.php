@@ -39,6 +39,9 @@ class UserIdentity extends \CUserIdentity {
 			} else {
 				// All good, username and password match
 				$this->errorCode = self::ERROR_NONE;
+				
+				// Set user states
+				$this->setState('id', $user->id);
 			}
 		}
 		return !$this->errorCode;	// Returns true is errorCode = 0

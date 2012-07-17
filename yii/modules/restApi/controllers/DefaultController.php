@@ -1,14 +1,17 @@
 <?php
 
-class DefaultController extends PpController
+class DefaultController extends \parallel\yii\Controller
 {	
 	// REST Actions
-	public function actionList()
+	public function actionIndex()
 	{
 	}
 	
-	public function actionView()
+	public function actionRead()
 	{
+		// Get the model
+		$model = $this->_loadModel($_GET['model'], $_GET['id']);
+		$this->_sendResponse($model);
 	}
 	
 	public function actionCreate()
@@ -28,7 +31,7 @@ class DefaultController extends PpController
 		//}
 		
 		// Get the model
-		$model = $this->_model($_GET['model'], $_GET['id']);
+		$model = $this->_loadModel($_GET['model'], $_GET['id']);
 		
 		// Perform the action
 		if(!$model->delete()) {
@@ -39,24 +42,23 @@ class DefaultController extends PpController
 		$this->_sendResponse();		
 	}
 
-	private function _model($modelName, $id = 0) {
-		$model = null;
-		// Attempt to create an instance of the model requested
-		if($id > 0) {
-			$model = \parallel\yii\ActiveRecord::model($modelName)->findByPk($id);
-		} else {
-			//$model = new \parallel\yii\ActiveRecord($modelName);
-		}
-
-		// Check that model exists
-		if($model!==null && $model instanceof \parallel\yii\ActiveRecord) {
-			return $model;
+	private function _loadModel($model, $id = 0) {
+		if(array_key_exists($model, $this->module->resource_map)) {
+			$this->model = $this->module->resource_map[$model];
+			$model = $this->loadModel($_GET['id']);			
 		} else {
 			throw new CHttpException(\parallel\yii\action::RESOURCE_NOT_FOUND_STATUS, \parallel\yii\action::RESOURCE_NOT_FOUND_MESSAGE);
-		}
+		}		
+		return $model;
 	}
 	
-	private function _sendResponse($data = '', $content_type = 'text/html')
+	/**
+	 * Method will convert the given data into the requested format and return it to the client code.
+	 * 
+	 * @param unknown_type $data
+	 * @param unknown_type $content_type
+	 */
+	private function _sendResponse($data = '', $content_type = 'json')
 	{
 		// set the status
 		$status_header = 'HTTP/1.1 ' . \parallel\yii\action::OK_STATUS . ' ' . \parallel\yii\action::OK_STATUS_MESSAGE;
@@ -66,7 +68,7 @@ class DefaultController extends PpController
 		switch($content_type) {
 			case 'json':
 				header('Content-type: application/json');
-				echo json_encode($data);
+				echo \CJSON::encode($data);
 				break;
 
 			case 'xml':

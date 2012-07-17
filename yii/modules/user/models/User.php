@@ -50,7 +50,7 @@ class User extends \parallel\yii\EntityActiveRecord
 			array('id, person_id, username_contact_detail_id, password', 'safe', 'on'=>'search'),
 		);
 	}
-
+	
 	/**
 	 * @return array relational rules.
 	 */

@@ -3,25 +3,10 @@ namespace parallel\yii\modules\restApi;
 
 class RestApiModule extends \CWebModule
 {
-	/**
-	 * Default return format
-	 * Valid:
-	 *     json
-	 *     xml
-	 */
-	public $defaultFormat = 'json';
+	public $resource_map = array();
 	
 	public function init()
-	{
-		// this method is called when the module is being created
-		// you may place code here to customize the module or the application
-
-		// import the module-level models and components
-		$this->setImport(array(
-				'person.models.*',
-				'company.models.*',
-		));
-		
+	{		
 		// Setup the REST URL Manager Rules
 		// TODO: Move url manager rule definition here
 	}

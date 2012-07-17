@@ -77,7 +77,6 @@ class EntityUpdateAction extends \parallel\yii\Action {
 			// Save data
 			if(!empty($_POST)) {
 				if($model->save()) {
-//\Yii::app()->end();
 					$this->controller->redirect(array($this->onSuccessRedirectTo,'id'=>$model->id));
 				}
 			}
