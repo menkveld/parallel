@@ -1,6 +1,5 @@
 <?php
-
-class DefaultController extends Controller
+class DefaultController extends PpController
 {	
 	// Overide the model property of the Controller base class
 	// Once this is done, the generic loadModel method can be used.
@@ -83,8 +82,7 @@ class DefaultController extends Controller
 			));
 		} else {
 			throw new \CHttpException(403, "User does not have sufficient permission for this action.");
-		}
-			
+		}		
 	}
 	
 	/**

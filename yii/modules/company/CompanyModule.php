@@ -1,7 +1,7 @@
 <?php
 namespace parallel\yii\modules\company;
 
-class CompanyModule extends \CWebModule
+class CompanyModule extends \parallel\yii\modules\UxWebModule
 {
 	public function init()
 	{

@@ -1,5 +1,5 @@
 <?php
-namespace parallel\yii\search;
+namespace parallel\yii\components\search;
 
 /**
  * The search component provides a globally accessible component to do searches.

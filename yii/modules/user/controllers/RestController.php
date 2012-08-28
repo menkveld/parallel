@@ -1,7 +1,6 @@
 <?php
-//namespace parallel\yii\modules\user\contollers;
 
-class RestController extends \parallel\yii\RestController
+class RestController extends \parallel\yii\controllers\RestController
 {
 	// Overide the model property of the Controller base class
 	// Once this is done, the generic loadModel method can be used.
@@ -80,6 +79,51 @@ class RestController extends \parallel\yii\RestController
 			// Send updated user back
 			$this->sendResponse(\parallel\yii\action::OK_STATUS,
 								\parallel\yii\action::OK_STATUS_MESSAGE);
+		}
+	}
+
+	/**
+	 * Returns user settings data
+	 */
+	public function actionReadSettings() {
+		
+	}
+
+	// ***** Non-resource API *****
+	/**
+	 * Method to allow external systems to authenticate users.
+	 *
+	 * This menthod will check if the requested use exists
+	 */
+	public function actionAuthenticate() {
+		$jsonUser = file_get_contents('php://input');
+		$arrUser = CJSON::decode($jsonUser,true);
+		print_r($arrUser);
+		die();
+	
+		// Find the user based on his email address
+		$user = \parallel\yii\modules\user\models\User::model()->with(array(
+				'usernameContactDetail' => array(
+						'value' => $_GET['username'],
+				),
+		))->find();
+	
+		// Check the user
+		if(empty($user)) {
+			// username not found
+			$this->sendResponse(\parallel\yii\action::RESOURCE_NOT_FOUND_STATUS,
+					\parallel\yii\action::RESOURCE_NOT_FOUND_MESSAGE);
+		} else {
+			// Check the password
+			if($user->password !== $user->encryptPassword($this->password)) {
+				// password incorrect
+				$this->sendResponse(\parallel\yii\action::USER_UNAUTHORISED_STATUS,
+						\parallel\yii\action::USER_UNAUTHORISED_MESSAGE);
+			} else {
+				// All good - return OK status
+				$this->sendResponse(\parallel\yii\action::OK_STATUS,
+						\parallel\yii\action::OK_STATUS_MESSAGE);
+			}
 		}
 	}
 }

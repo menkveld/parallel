@@ -1,5 +1,5 @@
 <?php
-namespace parallel\yii;
+namespace parallel\yii\modules;
 
 /**
  * 
@@ -8,7 +8,7 @@ namespace parallel\yii;
  * @author Anton Menkveld
  *
  */
-class UxWebModule extends \CWebModule {
+class UxWebModule extends \parallel\yii\WebModule {
 	
 	/**
 	 * This function will publish assets, if not yet published

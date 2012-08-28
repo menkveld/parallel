@@ -1,26 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "person_address".
+ * This is the model class for table "document".
  *
- * The followings are the available columns in table 'person_address':
+ * The followings are the available columns in table 'document':
  * @property string $id
- * @property string $person_id
- * @property string $address_id
- * @property string $label
- * @property string $notes
- * @property string $date_superseded
+ * @property string $name
+ * @property string $type_id
+ * @property string $status_id
  *
  * The followings are the available model relations:
- * @property Address $address
- * @property Person $person
+ * @property DocumentType $type
+ * @property DocumentStatus $status
  */
-class PersonAddress extends \parallel\yii\ActiveRecord
+class Document extends \parallel\yii\ActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return PersonAddress the static model class
+	 * @return Document the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -32,7 +30,7 @@ class PersonAddress extends \parallel\yii\ActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'person_address';
+		return 'document';
 	}
 
 	/**
@@ -43,13 +41,12 @@ class PersonAddress extends \parallel\yii\ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('person_id, address_id, label', 'required'),
-			array('person_id, address_id', 'length', 'max'=>10),
-			array('label', 'length', 'max'=>255),
-			array('notes, date_superseded', 'safe'),
+			array('name, type_id', 'required'),
+			array('name', 'length', 'max'=>255),
+			array('type_id, status_id', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, person_id, address_id, label, notes, date_superseded', 'safe', 'on'=>'search'),
+			array('id, name, type_id, status_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,9 +58,8 @@ class PersonAddress extends \parallel\yii\ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'person' => array(self::BELONGS_TO, 'Person', 'person_id'),
-			'address' => array(self::BELONGS_TO, 'parallel\yii\models\Addresses\Address', 'address_id'),
-				
+			'type' => array(self::BELONGS_TO, 'DocumentType', 'type_id'),
+			'status' => array(self::BELONGS_TO, 'DocumentStatus', 'status_id'),
 		);
 	}
 
@@ -74,11 +70,9 @@ class PersonAddress extends \parallel\yii\ActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'person_id' => 'Person',
-			'address_id' => 'Address',
-			'label' => 'Label',
-			'notes' => 'Notes',
-			'date_superseded' => 'Date Superseded',
+			'name' => 'Name',
+			'type_id' => 'Type',
+			'status_id' => 'Status',
 		);
 	}
 
@@ -94,11 +88,9 @@ class PersonAddress extends \parallel\yii\ActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('person_id',$this->person_id,true);
-		$criteria->compare('address_id',$this->address_id,true);
-		$criteria->compare('label',$this->label,true);
-		$criteria->compare('notes',$this->notes,true);
-		$criteria->compare('date_superseded',$this->date_superseded,true);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('type_id',$this->type_id,true);
+		$criteria->compare('status_id',$this->status_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

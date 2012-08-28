@@ -6,9 +6,9 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Companies', 'url'=>array('list')),
-	array('label'=>'New Company', 'url'=>array('create')),
+	array('label'=>'List Companies', 'icon'=>'list', 'url'=>array('list')),
+	array('label'=>'New Company', 'icon'=>'pencil', 'url'=>array('create')),
 );
 ?>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form_bs', array('model'=>$model)); ?>

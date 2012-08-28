@@ -128,8 +128,8 @@ class Company extends \parallel\yii\EntityActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'Registered Business Name',
-			'short_name' => 'Name (Company known as)',
+			'name' => 'Official Name',
+			'short_name' => 'Name',
 			'parent_company_id' => 'Parent Company',
 			'contactDetails' => 'Contact Details',
 		);

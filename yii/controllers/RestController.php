@@ -1,5 +1,5 @@
 <?php
-namespace parallel\yii;
+namespace parallel\yii\controllers;
 
 /**
  * This class is a base class for all module RestController
@@ -7,50 +7,73 @@ namespace parallel\yii;
  * @author Anton Menkveld
  *
  */
-class RestController extends Controller {
+class RestController extends \parallel\yii\Controller {
 
 	/**
-	 * Generic rest List action
-	 */
-	public function actionList() {
-	}
-	
-	/**
-	 * Generic rest Create action
+	 * Create a new resource of given type
+	 * e.g. POST /user
 	 */
 	public function actionCreate() {
+		
 	}
 	
 	/**
-	 * Generic rest Read action.
-	 * 
-	 * This method will simply return the ative record of the given model and ID
+	 * List requested resources
+	 * e.g. GET /user
+	 */
+	public function actionList() {
+		// ToDo: Add security, Add pagination
+		
+		// Get a list of all the required resources
+		$models = \parallel\yii\ActiveRecord::model($this->_model)->findAll();
+		
+		// Return the list to the client
+		$this->sendResponse($models);
+	}
+		
+	/**
+	 * Bulk update of selected resources
+	 * e.g. PUT /user
+	 */
+	public function actionBulkUpdate() {
+		
+	}
+	
+	/**
+	 * Delete all selected resources
+	 * e.g. DELETE /user
+	 */
+	public function actionDeleteAll() {
+		
+	}
+	
+	/**
+	 * Return the ative record of the given model and ID
+	 * e.g. GET /user/23
 	 */
 	public function actionRead() {
 		// Get the model
 		$model = $this->loadModel($_GET['id']);
 
 		// Send response
-		if(!empty($model)) {
-			$this->sendResponse(\parallel\yii\action::OK_STATUS,
-							\parallel\yii\action::OK_STATUS_MESSAGE,
-							$model);
+		if($model) {
+			$this->sendResponse($model);
 		} else {
-			$this->sendResponse(\parallel\yii\action::RESOURCE_NOT_FOUND_STATUS,
-								\parallel\yii\action::RESOURCE_NOT_FOUND_MESSAGE);
+			// Requested resources not found
+			throw new \parallel\yii\components\exceptions\ApiException(40420);
 		}
 	}
 	
 	/**
-	 * Generic rest Update action.
+	 * Updates a specific resource.
+	 * e.g. PUT /user/23
 	 */
 	public function actionUpdate() {
 	}
-		
 
 	/**
-	 * Generic rest Delete action
-	 * @throws CHttpException
+	 * Delete a specific resource
+	 * e.g. DELETE /user/23
 	 */
 	public function actionDelete()
 	{
@@ -72,11 +95,11 @@ class RestController extends Controller {
 	 * @param unknown_type $data
 	 * @param unknown_type $content_type
 	 */
-	protected function sendResponse($status, $status_message, $data = '', $content_type = 'json')
+	protected function sendResponse($data = '', $content_type = 'json')
 	{
 		if($data!==null) {
 			// set the status
-			$status_header = 'HTTP/1.1 ' . $status . ' ' . $status_message;
+			$status_header = 'HTTP/1.1 200 OK';
 			header($status_header);
 		
 			if($data!='') {
@@ -103,5 +126,9 @@ class RestController extends Controller {
 			
 		// Gracefully end the application
 		\Yii::app()->end();
+	}
+	
+	protected function sendError($error, $content_type = 'json') {
+		
 	}
 }

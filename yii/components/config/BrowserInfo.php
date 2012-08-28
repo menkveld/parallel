@@ -1,5 +1,5 @@
 <?php
-namespace parallel\yii\config;
+namespace parallel\yii\components\config;
 require_once(\Yii::getPathOfAlias('vendors').'/browser/Browser.php');
 /**
  * 

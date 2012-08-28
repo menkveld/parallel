@@ -11,7 +11,38 @@ namespace parallel\yii\components\auth;
  */
 
 class UserIdentity extends \CUserIdentity {
-		
+
+	const ERROR_INSTANCE_NOT_FOUND = 3;
+	
+	/**
+	 * User Identity Properties
+	 */
+	protected $_id;
+	protected $_instance;
+
+	/**
+	 * Override the original constructor to include the application instance.
+	 *
+	 * @param unknown_type $instance
+	 * @param unknown_type $username
+	 * @param unknown_type $password
+	 */
+	public function __construct($username, $password, $instance = null) {
+		parent::__construct($username, $password);
+		$this->_instance = $instance;
+	}
+	
+	/**
+	 * Returns the current user id
+	 */
+	public function getId() {
+		return $this->_id;
+	}
+	
+	public function getInstance() {
+		return $this->_instance;
+	}
+	
 	/**
 	 * Authenticates a user against the user table in the
 	 * local database.

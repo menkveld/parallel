@@ -1,7 +1,7 @@
 <?php
-namespace parallel\yii\modules\person;
+namespace parallel\yii\modules\document;
 
-class PersonModule extends \parallel\yii\modules\UxWebModule
+class DocumentModule extends \parallel\yii\modules\UxWebModule
 {
 	public function init()
 	{
@@ -10,8 +10,8 @@ class PersonModule extends \parallel\yii\modules\UxWebModule
 
 		// import the module-level models and components
 		$this->setImport(array(
-			'person.models.*',
-			'person.components.*',
+			'document.models.*',
+			'document.components.*',
 		));
 	}
 

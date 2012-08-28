@@ -5,8 +5,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Companies', 'url'=>array('list')),
+	array('label'=>'List Companies', 'icon'=>'list', 'url'=>array('list')),
 );
 ?>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form_bs', array('model'=>$model)); ?>

@@ -253,8 +253,6 @@ class DetailItems extends \CActiveRecordBehavior {
 		if(!empty($this->_formBridgeItems)) {
 			// form items are available show only these. This is only applicable when form data is posted.
 			$returnDetailItems = $this->_formBridgeItems;
-print_r($returnDetailItems);
-die();
 		} else {
 			// Items not received in form data get from database and config file
 			// Get current entity detail items already in the database
@@ -273,10 +271,10 @@ die();
 			// There are no items in the database but we have entries in the config file - so create objects from those entries
 			// This process will create a chain of AR object as per the given relationChain.		
 			if(!empty($defaultDetailItems) && empty($currentDetailItems)) {
-				
+
 				foreach($defaultDetailItems as $idx => $defaultDetailItem) {
 					// Add all required AR models in the relationChain
-					$relationModels = array();	// Initiakuse array to hold all AR models
+					$relationModels = array();	// Initial array to hold all AR models
 					$currentModelRelations = $this->owner->relations();	// Start with owner model
 					foreach($this->relationChain as $relation) {
 						$newModel = new $currentModelRelations[$relation][1];
@@ -297,9 +295,12 @@ die();
 						
 						// If value is empty, check that there is not global setting for this
 						if(empty($configDefault)) {
-							$globalDefault = \Yii::app()->config->client->globalDefaults->{$relation};
-							if(isset($globalDefault)) {
-								$configDefault = $globalDefault;
+							$globalDefaults = \Yii::app()->config->client->globalDefaults;
+							if($globalDefaults!==null) {
+								$globalDefault = $globalDefaults->{$relation};
+								if(isset($globalDefault)) {
+									$configDefault = $globalDefault;
+								}
 							}
 						}
 						

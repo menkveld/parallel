@@ -5,7 +5,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'New Company', 'url'=>array('create')),
+	array('label'=>'New Company', 'icon'=>'pencil', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -34,7 +34,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 )); ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php $this->widget('bootstrap.widgets.TbGridView', array(
 	'id'=>'company-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
@@ -43,10 +43,8 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'name',
 		'parent_company_id',
 		array(
-			'class'=>'CButtonColumn',
-			'htmlOptions' => array('class' => 'button-column',
-								   'style' => 'width: 100px',
-								)
+			'class'=>'bootstrap.widgets.TbButtonColumn',
+			'htmlOptions' => array('style'=>'width: 50px'),
 		),
 	),
 )); ?>

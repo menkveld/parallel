@@ -1,26 +1,24 @@
 <?php
+namespace parallel\yii\models\Auth;
 
 /**
- * This is the model class for table "person_address".
+ * This is the model class for table "auth_api_keys".
  *
- * The followings are the available columns in table 'person_address':
+ * The followings are the available columns in table 'auth_api_keys':
  * @property string $id
- * @property string $person_id
- * @property string $address_id
- * @property string $label
- * @property string $notes
- * @property string $date_superseded
- *
- * The followings are the available model relations:
- * @property Address $address
- * @property Person $person
+ * @property string $application_name
+ * @property string $key
+ * @property string $secret
+ * @property string $description
+ * @property string $date_created
+ * @property string $date_exipire
  */
-class PersonAddress extends \parallel\yii\ActiveRecord
+class AuthApiKeys extends \parallel\yii\ActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return PersonAddress the static model class
+	 * @return AuthApiKeys the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -32,7 +30,7 @@ class PersonAddress extends \parallel\yii\ActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'person_address';
+		return 'auth_api_keys';
 	}
 
 	/**
@@ -43,13 +41,13 @@ class PersonAddress extends \parallel\yii\ActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('person_id, address_id, label', 'required'),
-			array('person_id, address_id', 'length', 'max'=>10),
-			array('label', 'length', 'max'=>255),
-			array('notes, date_superseded', 'safe'),
+			array('application_name, key, secret', 'required'),
+			array('application_name', 'length', 'max'=>255),
+			array('key, secret', 'length', 'max'=>45),
+			array('description, date_created, date_exipire', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, person_id, address_id, label, notes, date_superseded', 'safe', 'on'=>'search'),
+			array('id, application_name, key, secret, description, date_created, date_exipire', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,9 +59,6 @@ class PersonAddress extends \parallel\yii\ActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'person' => array(self::BELONGS_TO, 'Person', 'person_id'),
-			'address' => array(self::BELONGS_TO, 'parallel\yii\models\Addresses\Address', 'address_id'),
-				
 		);
 	}
 
@@ -74,11 +69,12 @@ class PersonAddress extends \parallel\yii\ActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'person_id' => 'Person',
-			'address_id' => 'Address',
-			'label' => 'Label',
-			'notes' => 'Notes',
-			'date_superseded' => 'Date Superseded',
+			'application_name' => 'Application Name',
+			'key' => 'Key',
+			'secret' => 'Secret',
+			'description' => 'description',
+			'date_created' => 'Date Created',
+			'date_exipire' => 'Date Exipire',
 		);
 	}
 
@@ -94,11 +90,12 @@ class PersonAddress extends \parallel\yii\ActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
-		$criteria->compare('person_id',$this->person_id,true);
-		$criteria->compare('address_id',$this->address_id,true);
-		$criteria->compare('label',$this->label,true);
-		$criteria->compare('notes',$this->notes,true);
-		$criteria->compare('date_superseded',$this->date_superseded,true);
+		$criteria->compare('application_name',$this->application_name,true);
+		$criteria->compare('key',$this->key,true);
+		$criteria->compare('secret',$this->secret,true);
+		$criteria->compare('description',$this->description,true);
+		$criteria->compare('date_created',$this->date_created,true);
+		$criteria->compare('date_exipire',$this->date_exipire,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

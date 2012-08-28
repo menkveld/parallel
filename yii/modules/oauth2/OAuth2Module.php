@@ -1,7 +1,7 @@
 <?php
-namespace parallel\yii\modules\user;
+namespace parallel\yii\modules\oauth2;
 
-class UserModule extends \parallel\yii\modules\UxWebModule
+class OAuth2Module extends \parallel\yii\WebModule
 {		
 	public function init()
 	{	

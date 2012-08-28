@@ -44,17 +44,17 @@ class Controller extends \CController {
 	 * This method is used by the 'accessControl' filter.
 	 * @return array access control rules
 	 */
-	public function accessRules()
-	{
-		return array(
-				array('allow',
-						'users'=>array('@'),
-				),
-				array('deny',  // deny all unauthenticated users
-						'users'=>array('*'),
-				),
-		);
-	}
+// 	public function accessRules()
+// 	{
+// 		return array(
+// 				array('allow',
+// 						'users'=>array('@'),
+// 				),
+// 				array('deny',  // deny all unauthenticated users
+// 						'users'=>array('*'),
+// 				),
+// 		);
+// 	}
 
 	/**
 	 * Setter function for the _model
@@ -66,7 +66,8 @@ class Controller extends \CController {
 	
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
+	 * If the data model is not found, FALSE is returned.
+	 * 
 	 * @param integer the ID of the model to be loaded
 	 */
 	public function loadModel($id = 0) {
@@ -85,11 +86,11 @@ class Controller extends \CController {
 			if($model!==null && $model instanceof \parallel\yii\ActiveRecord) {
 				return $model;
 			} else {
-				throw new \CException('Model could not be created.');
+				return false;
 			}
 		}
-	}
-		
+	}		
+	
 	/**
 	 * To be able to use the generic loadModel method, child classes should 
 	 * ovveride this property. 

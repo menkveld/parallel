@@ -1,5 +1,4 @@
 <?php
-namespace parallel\yii\modules\person\models;
 
 /**
  * This is the model class for table "person".
@@ -127,8 +126,8 @@ class Person extends \parallel\yii\EntityActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'contactDetails' => array(self::HAS_MANY, '\parallel\yii\modules\person\models\PersonContactDetail', 'person_id', 'on' => 'date_superseded=\'1970-01-01 00:00:00\'', 'order' => 'contact_detail_id'),	
-			'addresses' => array(self::HAS_MANY, '\parallel\yii\modules\person\models\PersonAddress', 'person_id', 'on' => 'date_superseded=\'1970-01-01 00:00:00\''),
+			'contactDetails' => array(self::HAS_MANY, 'PersonContactDetail', 'person_id', 'on' => 'date_superseded=\'1970-01-01 00:00:00\'', 'order' => 'contact_detail_id'),	
+			'addresses' => array(self::HAS_MANY, 'PersonAddress', 'person_id', 'on' => 'date_superseded=\'1970-01-01 00:00:00\''),
 			//'personEmployments' => array(self::HAS_MANY, 'PersonEmployment', 'person_id'),
 			//'personQualifications' => array(self::HAS_MANY, 'PersonQualification', 'person_id'),
 			//'personUserRoles' => array(self::HAS_MANY, 'PersonUserRole', 'person_id'),
@@ -160,7 +159,7 @@ class Person extends \parallel\yii\EntityActiveRecord
 		// Warning: Please modify the following code to remove attributes that
 		// should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria=new \CDbCriteria;
 
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('full_name',$this->full_name,true);
@@ -169,7 +168,7 @@ class Person extends \parallel\yii\EntityActiveRecord
 		$criteria->compare('date_of_birth',$this->date_of_birth,true);
 		$criteria->compare('gender',$this->gender,true);
 
-		return new CActiveDataProvider(get_class($this), array(
+		return new \CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,
 		));
 	}
